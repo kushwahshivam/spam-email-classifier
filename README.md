@@ -1,131 +1,142 @@
-# Spam Email Classifier (Minor Project)
+Spam Email Classifier Project
+Project Overview
 
-An end-to-end mini project that trains a **machine learning model** to classify emails as **spam** or **ham** (not spam), with a **web-based frontend** for testing.
+This project classifies emails as spam or ham (not spam) using Machine Learning. It includes a training pipeline, a Flask backend, and a web-based frontend for real-time predictions. The goal is to help users automatically identify unwanted emails and improve email security.
 
----
+Business Requirements & KPIs
 
-## Project Structure
+Spam Detection Accuracy – Correctly identifying spam emails
 
+Precision – Proportion of correctly predicted spam emails
+
+Recall – Proportion of actual spam emails correctly detected
+
+F1-Score – Harmonic mean of precision and recall
+
+Confusion Matrix – True Positive, True Negative, False Positive, False Negative
+
+Granular Analysis
+
+Classification by Keyword Patterns – How certain words influence predictions
+
+Performance by Email Length – Compare short vs long emails
+
+Dataset Balance Analysis – Check spam/ham ratio
+
+Model Evaluation Metrics – Accuracy, Precision, Recall, F1-score
+
+Interactive Frontend Testing – User can input email text and get prediction
+
+Tools & Technologies
+
+Python → Data preprocessing, model training, prediction (Pandas, scikit-learn, Joblib)
+
+Flask + Flask-CORS → Web backend and API
+
+HTML, CSS, JavaScript → Frontend interface for email input and predictions
+
+Streamlit (optional) → Alternative interactive demo
+
+Joblib → Saving and loading trained models
+
+Dashboard / Frontend Preview
+
+Web Interface: Enter an email text and get instant spam/ham prediction
+
+CLI: Command-line testing for quick predictions
+
+Insights & Findings
+
+Shorter emails with certain trigger words are often classified as spam
+
+Classifier can achieve high precision for the current dataset
+
+TF-IDF + Logistic Regression provides a simple yet effective baseline
+
+Performance can improve with larger datasets and advanced preprocessing
+
+Folder Structure
 spam-email-classifier-full/
-├── data/
-│   └── dataset.csv               # sample dataset with 'text' and 'label' columns
-├── backend/
-│   ├── train.py                  # trains TF-IDF + Logistic Regression
-│   ├── predict.py                # CLI prediction helper
-│   ├── app.py                    # Flask backend + serves frontend
-│   ├── run_all.py                # optional: train + run backend in one command
-│   └── models/                   # trained model and vectorizer files
-├── frontend/
-│   ├── index.html                # web interface
-│   ├── style.css                 # styling
-│   └── script.js                 # JS to call backend API
-├── requirements.txt              # Python dependencies
-└── README.md
+│
+├── data/                 # Dataset CSV (text,label)
+├── backend/              # Flask backend + training scripts
+│   ├── train.py
+│   ├── predict.py
+│   ├── app.py
+│   ├── run_all.py        # optional: train + run backend together
+│   └── models/           # Trained model & vectorizer
+├── frontend/             # Web interface
+│   ├── index.html
+│   ├── style.css
+│   └── script.js
+├── requirements.txt      # Python dependencies
+└── README.md             # Project documentation
 
----
+How to Use
 
-## Quick Start
+Clone the repository
 
-### 1️⃣ Set up virtual environment
+git clone <your-repo-url>
+cd spam-email-classifier-full
+
+
+Set up virtual environment
 
 python -m venv .venv
-
 # Windows PowerShell
 .venv\Scripts\Activate.ps1
-
 # macOS / Linux
 source .venv/bin/activate
 
-Install dependencies:
+pip install -r backend/requirements.txt
 
-pip install -r requirements.txt
 
----
+Prepare Dataset
 
-### 2️⃣ Prepare dataset
+Place dataset.csv in data/ folder
 
-- Place your dataset CSV at `data/dataset.csv`  
-- **CSV format**: two columns → `text,label`  
-- **Labels** must be exactly `spam` or `ham` (lowercase)  
-- You can start with the small sample dataset provided, then expand for better accuracy.
+CSV must have columns: text,label
 
-Example:
+Labels must be either spam or ham
 
-label,text
-ham,"Hey! Are we still meeting for lunch today?"
-spam,"Win a brand new car! Click here to claim your prize now."
-
----
-
-### 3️⃣ Train the model
+Train the Model
 
 cd backend
 python train.py --data ../data/dataset.csv --model_dir models
 
-This will:
 
-- Split data into train/test sets
-- Train a **TF-IDF + Logistic Regression** pipeline
-- Save the trained pipeline to `backend/models/`  
-  (`spam_model.pkl` and `vectorizer.pkl`)
-- Print evaluation metrics (accuracy, precision, recall, F1, confusion matrix)
+Predict from CLI
 
----
+python predict.py --model models/spam_model.pkl --text "Win a FREE iPhone now! Click here"
 
-### 4️⃣ Run backend + frontend
 
-#### Option A: Run separately
+Run Web App
 
 cd backend
 python app.py
 
-Open browser at [http://127.0.0.1:5000](http://127.0.0.1:5000)
 
-#### Option B: Run combined (train + backend automatically)
+Open browser: http://127.0.0.1:5000
 
-cd backend
-python run_all.py
+Enter email text → click Predict → see spam/ham
 
-Frontend will load automatically, and you can classify emails directly.
+Future Improvements
 
----
+Use Multinomial Naive Bayes or Linear SVM for higher accuracy
 
-### 5️⃣ Quick predictions from CLI
+Add bigrams/trigrams for better TF-IDF representation
 
-python predict.py --model models/spam_model.pkl --text "Win a FREE iPhone now! Click here"
+Automate dataset preprocessing pipeline
 
----
+Deploy backend on Render / Heroku / AWS and frontend on Netlify / Vercel
 
-## Project Details
+Add probability scores and confidence levels for predictions
 
-### Methodology
+Author
 
-- **Features**: TF-IDF vectors of email text  
-- **Classifier**: Logistic Regression (fast, strong baseline)  
-- **Preprocessing**: lowercase, strip spaces  
+👨‍💻 Shivam Kushwah
+🔗 LinkedIn : https://www.linkedin.com/in/kushwahshivam/
 
----
+📧 Email: your-email@example.com
 
-### Evaluation
-
-- Metrics reported: Accuracy, Precision, Recall, F1-score  
-- Confusion matrix included  
-- Works best with a **larger dataset**; small sample datasets may misclassify some emails.
-
----
-
-### Possible Extensions
-
-- Use **Multinomial Naive Bayes** or **Linear SVM**  
-- Include **bigrams or trigrams** in TF-IDF (`ngram_range=(1,2)`)  
-- Handle **imbalanced datasets** with class weights  
-- Add **probability scores** for spam predictions  
-- Add **ROC/PR curves** for evaluation  
-
----
-
-### Notes
-
-- Make sure your virtual environment is active before running scripts  
-- Ensure dataset encoding is **UTF-8**  
-- Frontend communicates with backend via **Flask API** (`/api/predict`)  
+✨ This project demonstrates a complete spam detection pipeline with ML, web integration, and deployment-ready architecture.
