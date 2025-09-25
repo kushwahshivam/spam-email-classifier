@@ -1,6 +1,7 @@
 Setup Instructions
 1️⃣ Clone the repository
-git clone <your-repo-url>
+
+git clone https://github.com/kushwahshivam/spam-email-classifier.git
 cd spam-email-classifier
 
 2️⃣ Create and activate a virtual environment
