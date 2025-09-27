@@ -15,7 +15,7 @@ def load_data(path):
     if not set(['text','label']).issubset(df.columns):
         raise ValueError("CSV must contain columns: text,label")
     df = df.dropna(subset=['text','label']).copy()
-    df['label'] = df['label'].astype(str).str.strip().str.lower()  # fixed
+    df['label'] = df['label'].astype(str).str.strip().str.lower()
     # Keep only spam/ham
     df = df[df['label'].isin(['spam','ham'])]
     if df.empty:

@@ -7,7 +7,7 @@ from pathlib import Path
 app = Flask(__name__, static_folder='../frontend', static_url_path='/')
 CORS(app)
 
-MODEL_DIR = Path('/models')
+MODEL_DIR = Path(__file__).parent / 'models'
 MODEL_PATH = MODEL_DIR / 'spam_model.pkl'
 VEC_PATH = MODEL_DIR / 'vectorizer.pkl'
 
