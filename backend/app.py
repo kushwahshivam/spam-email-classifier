@@ -4,7 +4,7 @@ from flask_cors import CORS
 import joblib
 from pathlib import Path
 
-app = Flask(__name__, static_folder='../frontend', static_url_path='/')
+app = Flask(__name__, static_folder='../frontend', static_url_path='')
 CORS(app)
 
 MODEL_DIR = Path(__file__).parent / 'models'
@@ -22,6 +22,11 @@ def load_pipeline():
 def index():
     # Serve the frontend
     return send_from_directory(app.static_folder, 'index.html')
+
+@app.route('/<path:path>')
+def serve_static(path):
+    # Serve static files (CSS, JS, etc.)
+    return send_from_directory(app.static_folder, path)
 
 @app.route('/api/predict', methods=['POST'])
 def api_predict():
